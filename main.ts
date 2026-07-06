@@ -1,8 +1,6 @@
-import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
-
-serve(async (req) => {
+Deno.serve(async (req) => {
   const url = new URL(req.url);
-  
+
   if (req.method === "POST" && url.pathname === "/api/chat") {
     try {
       const body = await req.json();
@@ -22,14 +20,19 @@ serve(async (req) => {
       });
       const data = await response.json();
       return new Response(JSON.stringify(data), {
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
       });
     } catch (e) {
-      return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      return new Response(JSON.stringify({ error: e.message }), {
+        status: 500,
+      });
     }
   }
 
-  return new Response(`你好，模构智脑正在运行`, {
-    headers: { "Content-Type": "text/html; charset=utf-8" },
+  return new Response("模构智脑运行中", {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
-}, { port: 8000 });
+});
