@@ -1,5 +1,8 @@
+import { serveFile } from "jsr:@std/http/file-server";
+
 Deno.serve(async (req) => {
   const url = new URL(req.url);
+  
   if (req.method === "POST" && url.pathname === "/api/chat") {
     try {
       const body = await req.json();
@@ -28,5 +31,6 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: String(e) }), { status: 500 });
     }
   }
-  return new Response("OK", { status: 200 });
+
+  return serveFile(req, "./index.html");
 });
