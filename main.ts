@@ -10,7 +10,7 @@ Deno.serve(async (req) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": "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",
+          "x-api-key": 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
           "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
