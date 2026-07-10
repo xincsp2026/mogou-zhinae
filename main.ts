@@ -1,16 +1,22 @@
 import { serveFile } from "jsr:@std/http/file-server";
-
 Deno.serve(async (req) => {
   const url = new URL(req.url);
-  
+
   if (req.method === "POST" && url.pathname === "/api/chat") {
     try {
+      const apiKey = Deno.env.get("ANTHROPIC_API_KEY");
+      if (!apiKey) {
+        return new Response(
+          JSON.stringify({ error: "API key not configured" }),
+          { status: 500, headers: { "Content-Type": "application/json" } },
+        );
+      }
       const body = await req.json();
       const r = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": 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
+          "x-api-key": apiKey,
           "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
@@ -31,6 +37,5 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: String(e) }), { status: 500 });
     }
   }
-
   return serveFile(req, "./index.html");
 });
