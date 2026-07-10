@@ -1,52 +1,121 @@
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>模构智脑</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
-.nav{height:52px;background:#161614;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 1rem;flex-shrink:0}
-.lb{width:32px;height:32px;background:#6A9E2F;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;margin-right:.6rem}
-.on{margin-left:auto;font-size:11px;color:#8BC34A;padding:.28rem .65rem;border-radius:10px;background:rgba(139,195,74,.1)}
-.msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.65rem}
-.msg{display:flex;gap:8px;align-items:flex-start}
+html,body{height:100%;overflow:hidden}
+body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;display:flex;flex-direction:column;height:100vh;height:100dvh}
+.nav{height:48px;background:#161614;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 1rem;flex-shrink:0}
+.lb{width:28px;height:28px;background:#6A9E2F;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-right:.5rem;flex-shrink:0}
+.nav span{font-size:14px;font-weight:600}
+.on{margin-left:auto;font-size:10px;color:#8BC34A;padding:.25rem .55rem;border-radius:8px;background:rgba(139,195,74,.1)}
+.msgs{flex:1;overflow-y:auto;overflow-x:hidden;padding:.75rem;display:flex;flex-direction:column;gap:.55rem;-webkit-overflow-scrolling:touch}
+.msg{display:flex;gap:7px;align-items:flex-start}
 .msg.u{flex-direction:row-reverse}
-.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;background:#6A9E2F;color:#fff}
+.av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;background:#6A9E2F;color:#fff}
 .av.u{background:#3A3A35}
-.bbl{padding:.65rem .9rem;font-size:13px;line-height:1.8;max-width:85%;white-space:pre-wrap;word-break:break-word;background:#161614;border:1px solid rgba(255,255,255,.07);border-radius:3px 12px 12px 12px}
-.msg.u .bbl{background:#6A9E2F;color:#fff;border-radius:12px 3px 12px 12px}
-.qw{padding:.35rem 1rem;display:flex;flex-wrap:wrap;gap:.35rem}
-.qr{padding:.3rem .75rem;border-radius:14px;font-size:12px;border:1px solid rgba(255,255,255,.13);color:rgba(240,237,232,.5);cursor:pointer;background:transparent}
-.ia{padding:.85rem 1rem;border-top:1px solid rgba(255,255,255,.07);background:#161614;display:flex;gap:.55rem;flex-shrink:0}
-.ii{flex:1;padding:.6rem .95rem;background:#1E1E1B;border:1px solid rgba(255,255,255,.13);border-radius:22px;color:#F0EDE8;font-size:13px;font-family:Arial,sans-serif}
+.bbl{padding:.6rem .85rem;font-size:13px;line-height:1.8;max-width:88%;white-space:pre-wrap;word-break:break-word;background:#161614;border:1px solid rgba(255,255,255,.07);border-radius:3px 10px 10px 10px}
+.msg.u .bbl{background:#5A8A2A;color:#fff;border-radius:10px 3px 10px 10px}
+.qw{padding:.3rem .75rem;display:flex;flex-wrap:wrap;gap:.3rem}
+.qr{padding:.3rem .7rem;border-radius:12px;font-size:12px;border:1px solid rgba(139,195,74,.3);color:#8BC34A;cursor:pointer;background:rgba(139,195,74,.06)}
+.ia{padding:.65rem .75rem;border-top:1px solid rgba(255,255,255,.07);background:#161614;display:flex;gap:.5rem;flex-shrink:0}
+.ii{flex:1;padding:.55rem .85rem;background:#1E1E1B;border:1px solid rgba(255,255,255,.13);border-radius:20px;color:#F0EDE8;font-size:14px;font-family:Arial,sans-serif;-webkit-appearance:none}
 .ii:focus{outline:none;border-color:#8BC34A}
-.sb{width:38px;height:38px;border-radius:50%;background:#6A9E2F;color:#fff;border:none;cursor:pointer;font-size:16px;flex-shrink:0}
+.sb{width:36px;height:36px;border-radius:50%;background:#6A9E2F;color:#fff;border:none;cursor:pointer;font-size:15px;flex-shrink:0}
+.sb:disabled{opacity:.4}
+.rc{margin:.4rem 0 .4rem 33px;background:#0f2010;border:1px solid rgba(139,195,74,.35);border-radius:12px;padding:.85rem 1rem}
+.rc a{color:#8BC34A;font-size:13px;font-weight:600;text-decoration:none;display:block;margin-bottom:.3rem}
+.rc span{color:rgba(240,237,232,.55);font-size:11px;line-height:1.7}
 </style>
 </head>
 <body>
 <nav class="nav">
   <div class="lb">MG</div>
-  <span style="font-size:15px;font-weight:600">模构智脑</span>
-  <div class="on">在线服务中</div>
+  <span>模构智脑</span>
+  <div class="on">● 在线服务中</div>
 </nav>
 <div class="msgs" id="M"></div>
 <div id="Q"></div>
 <div class="ia">
-  <input class="ii" id="I" placeholder="有什么想了解的，直接说..."/>
+  <input class="ii" id="I" placeholder="随时问我，我来帮您..." type="text"/>
   <button class="sb" id="S">&#8594;</button>
-</div>
-<script>
-var H = [];
-var SYS = "你是深圳模构智能科技公司的AI工具注册小助手，名字叫模构小助手。职责是帮助用户了解模构AI平台、解答使用问题、引导注册购买。核心功能：视频创作（人物视频/短剧视频/批量混剪）、电商专属9功能（场景替换/商品换色/AI抠图/图片翻译等）、视频分镜工坊（产品图到25宫格分镜到拍摄脚本）。定价：商家版2980元每年、企业版29800元每年、定制版198000元。高情商销售，先了解用户行业，再推荐功能，每次100字以内，只说中文。";
-function am(r,t){var m=document.getElementById("M"),d=document.createElement("div");d.className="msg "+r;var a=document.createElement("div");a.className="av"+(r==="u"?" u":"");a.textContent=r==="ai"?"MG":"您";var b=document.createElement("div");b.className="bbl";b.textContent=t;d.appendChild(a);d.appendChild(b);m.appendChild(d);m.scrollTop=m.scrollHeight;}
-function sq(opts){var q=document.getElementById("Q");q.innerHTML="";var w=document.createElement("div");w.className="qw";opts.forEach(function(o){var b=document.createElement("button");b.className="qr";b.textContent=o;b.onclick=function(){q.innerHTML="";st(o);};w.appendChild(b);});q.appendChild(w);}
-function st(text){document.getElementById("Q").innerHTML="";am("u",text);document.getElementById("I").value="";document.getElementById("S").disabled=true;H.push({role:"user",content:text});fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:SYS,messages:H})}).then(function(r){return r.json();}).then(function(d){document.getElementById("S").disabled=false;var t=(d.content||[]).map(function(b){return b.text||"";}).join("");if(!t){am("ai","抱歉，请重试。");return;}H.push({role:"assistant",content:t});am("ai",t);if(H.length<=2)sq(["我做家具的","我是室内设计师","我做短视频","我是建材品牌","我想了解代理"]);}).catch(function(){document.getElementById("S").disabled=false;am("ai","网络错误，请重试。");});}
-document.getElementById("S").onclick=function(){var v=document.getElementById("I").value.trim();if(v)st(v);};
-document.getElementById("I").onkeydown=function(e){if(e.key==="Enter"){var v=this.value.trim();if(v)st(v);}};
-am("ai","您好！我是模构小助手！\n\n我是您的AI工具注册小助手，可以帮您：\n\n1. 了解模构AI平台的全部功能\n2. 根据您的行业推荐最适合的功能\n3. 解答平台使用中的任何问题\n4. 帮您选择最合适的版本和价格\n5. 引导您完成注册和开通流程\n\n请问您目前做什么行业？");
-sq(["我做家具的","我是室内设计师","我做短视频/内容","我是建材品牌","我想了解代理合作"]);
+</div><script>
+var H=[];
+var SYS='你是模构AI平台的专属顾问小助手，名字叫小模。说话自然有温度，像朋友一样，不像机器人。熟悉模构AI所有功能和操作步骤。\n\n注册方式：微信搜索小程序"模构AI"，或网页 mogouzhineng.com/ai/\n\n核心功能：\n视频分镜工坊：上传产品图→三视图→卖点分析→25宫格分镜→拍摄脚本→视频合成，7分钟生成15秒广告视频，一条约20元，一天可出80条\n传统方式对比：3个摄影人员每人2-3万，一天最多3-4条\n电商专属9功能：场景替换/商品换色/AI抠图/无损放大/图片翻译等\n批量视频：一键下载爆款→拆解结构→混剪，1小时出20条\n\n定价：商家版2980元每年/企业版29800元每年/定制版198000元\n\n销售原则：先了解用户痛点，循序渐进，让用户自己算账，第3-4轮后给注册链接，在回复末尾加[LINK]。只说中文，不超过120字，不用markdown格式。';
+
+function am(r,t){
+  var m=document.getElementById('M');
+  var d=document.createElement('div');d.className='msg '+r;
+  var a=document.createElement('div');a.className='av'+(r==='u'?' u':'');
+  a.textContent=r==='ai'?'模':'您';
+  var b=document.createElement('div');b.className='bbl';
+  var hasLink=t.indexOf('[LINK]')>=0;
+  var clean=t.replace(/\[LINK\]/g,'').replace(/\*\*/g,'').replace(/\*/g,'').trim();
+  b.textContent=clean;
+  d.appendChild(a);d.appendChild(b);
+  m.appendChild(d);
+  if(hasLink){
+    var rc=document.createElement('div');rc.className='rc';
+    rc.innerHTML='<a href="https://mogouzhineng.com/ai/" target="_blank">立即免费体验 → mogouzhineng.com/ai/</a><span>或微信搜索小程序：模构AI</span>';
+    m.appendChild(rc);
+  }
+  setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
+}
+
+function sq(opts){
+  var q=document.getElementById('Q');q.innerHTML='';
+  if(!opts||!opts.length)return;
+  var w=document.createElement('div');w.className='qw';
+  opts.forEach(function(o){
+    var b=document.createElement('button');b.className='qr';b.textContent=o;
+    b.onclick=function(){q.innerHTML='';st(o);};
+    w.appendChild(b);
+  });
+  q.appendChild(w);
+}
+
+function st(text){
+  document.getElementById('Q').innerHTML='';
+  am('u',text);
+  document.getElementById('I').value='';
+  document.getElementById('S').disabled=true;
+  H.push({role:'user',content:text});
+  fetch('/api/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({system:SYS,messages:H})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    document.getElementById('S').disabled=false;
+    var t=(d.content||[]).map(function(b){return b.text||'';}).join('');
+    if(!t){am('ai','抱歉，请重试。');return;}
+    H.push({role:'assistant',content:t});
+    am('ai',t);
+    var round=Math.floor(H.length/2);
+    if(round===1)sq(['我做家具建材','我是室内设计师','我做短视频','我是电商卖家']);
+    else if(round===2)sq(['内容成本太高','产量不够','想了解怎么用']);
+    else if(round>=3)sq(['想马上体验','想了解价格','想联系顾问']);
+  })
+  .catch(function(){
+    document.getElementById('S').disabled=false;
+    am('ai','网络有点问题，稍等再试试？');
+  });
+}
+
+document.getElementById('S').onclick=function(){
+  var v=document.getElementById('I').value.trim();if(v)st(v);
+};
+document.getElementById('I').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();var v=this.value.trim();if(v)st(v);}
+});
+
+am('ai','您好呀！我是模构AI的小助手小模 👋\n\n您现在做内容，一般是怎么操作的？拍视频、找人外包，还是自己用工具？\n\n随便聊聊，我帮您看看有没有更省钱省力的方法 😊');
+sq(['我做家具建材','我是室内设计师','我做短视频','我是电商卖家','我是品牌方']);
 </script>
 </body>
 </html>
