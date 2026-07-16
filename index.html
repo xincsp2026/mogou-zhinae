@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -113,7 +115,6 @@ function addCase(){
 }
 
 // ===== 按功能展示案例:用户问哪个功能,就展示哪个功能的成品 =====
-// 命名规则:功能N的图片叫 N-1.jpg N-2.jpg N-3.jpg,视频叫 N.mp4,传到仓库即生效,没传自动不显示
 // 1室内设计 2文生效果图 3短剧 4数字人 5广告工坊 6电商详情页
 var KW=[
   ['室内','CAD','彩平'],
@@ -132,22 +133,35 @@ function detectFeat(t){
   }
   return 0;
 }
+// 每个功能的案例文件写在下面,按展示顺序排列,支持 .jpg .png .mp4
+var MEDIA={
+  1:[],
+  2:['95e5ce5426fcce1c8d4c70defb2e7e20.mp4','fd2d135277de478e681a9d6779c4ed32.mp4'],
+  3:[],
+  4:[],
+  5:[],
+  6:[]
+};
 function addCases(n){
+  var list=MEDIA[n]||[];
+  if(!list.length)return;
   var m=document.getElementById('M');
   var w=document.createElement('div');w.className='gal';
-  for(var i=1;i<=3;i++){
-    var im=document.createElement('img');
-    im.src='/'+n+'-'+i+'.jpg';
-    im.onerror=function(){if(this.parentNode)this.parentNode.removeChild(this);};
-    w.appendChild(im);
-  }
-  var v=document.createElement('video');
-  v.src='/'+n+'.mp4';
-  v.controls=true;v.preload='metadata';
-  v.setAttribute('playsinline','');
-  v.style.height='150px';v.style.borderRadius='10px';v.style.flexShrink='0';
-  v.onerror=function(){if(this.parentNode)this.parentNode.removeChild(this);};
-  w.appendChild(v);
+  list.forEach(function(f){
+    var el;
+    if(/\.mp4$/i.test(f)){
+      el=document.createElement('video');
+      el.src='/'+f;
+      el.controls=true;el.preload='metadata';
+      el.setAttribute('playsinline','');
+      el.style.height='150px';el.style.borderRadius='10px';el.style.flexShrink='0';
+    }else{
+      el=document.createElement('img');
+      el.src='/'+f;
+    }
+    el.onerror=function(){if(this.parentNode)this.parentNode.removeChild(this);};
+    w.appendChild(el);
+  });
   m.appendChild(w);
   setTimeout(function(){m.scrollTop=m.scrollHeight;},100);
 }
@@ -259,5 +273,3 @@ sq(['我做家具建材','我是室内设计师','我做短视频','我是电商
 </script>
 </body>
 </html>
-
-
