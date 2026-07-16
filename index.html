@@ -12,6 +12,10 @@ body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;display:flex;
 .lb{width:28px;height:28px;background:#6A9E2F;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-right:.5rem;flex-shrink:0}
 .nav span{font-size:14px;font-weight:600}
 .on{margin-left:auto;font-size:10px;color:#8BC34A;padding:.25rem .55rem;border-radius:8px;background:rgba(139,195,74,.1)}
+.pb{flex-shrink:0;background:linear-gradient(90deg,#3d5c14,#5A8A2A);display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem}
+.pb span{flex:1;font-size:12px;color:#fff;line-height:1.5}
+.pb b{color:#EFFFD0}
+.pb button{background:none;border:none;color:rgba(255,255,255,.7);font-size:14px;cursor:pointer;padding:.2rem .4rem;flex-shrink:0}
 .msgs{flex:1;overflow-y:auto;overflow-x:hidden;padding:.75rem;display:flex;flex-direction:column;gap:.55rem;-webkit-overflow-scrolling:touch}
 .msg{display:flex;gap:7px;align-items:flex-start}
 .msg.u{flex-direction:row-reverse}
@@ -26,6 +30,16 @@ body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;display:flex;
 .case .row span{color:rgba(240,237,232,.65)}
 .case .ck{color:#8BC34A;flex-shrink:0}
 .case .note{margin-top:.6rem;padding:.55rem .7rem;background:rgba(139,195,74,.08);border-radius:8px;font-size:12px;color:#CDE8A8;line-height:1.7}
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.2rem 0 .2rem 33px;max-width:88%}
+.tgi{border-radius:12px;padding:.8rem .7rem;cursor:pointer;border:1px solid rgba(255,255,255,.09);position:relative;overflow:hidden}
+.tgi:active{transform:scale(.97)}
+.tgi .tge{font-size:22px;margin-bottom:.35rem}
+.tgi .tgt{font-size:12.5px;font-weight:600;color:#F0EDE8;line-height:1.4}
+.tgi .tgs{font-size:10.5px;color:rgba(240,237,232,.55);margin-top:.15rem;line-height:1.4}
+.tg1{background:linear-gradient(135deg,#1d2a10,#26380f)}
+.tg2{background:linear-gradient(135deg,#102025,#0f2e33)}
+.tg3{background:linear-gradient(135deg,#291d10,#3a260c)}
+.tg4{background:linear-gradient(135deg,#22102a,#2e0f33)}
 .qw{padding:.3rem .75rem;display:flex;flex-wrap:wrap;gap:.3rem}
 .qr{padding:.3rem .7rem;border-radius:12px;font-size:12px;border:1px solid rgba(139,195,74,.3);color:#8BC34A;cursor:pointer;background:rgba(139,195,74,.06)}
 .ia{padding:.65rem .75rem;border-top:1px solid rgba(255,255,255,.07);background:#161614;display:flex;gap:.5rem;flex-shrink:0}
@@ -36,6 +50,11 @@ body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;display:flex;
 .rc{margin:.4rem 0 .4rem 33px;background:#0f2010;border:1px solid rgba(139,195,74,.35);border-radius:12px;padding:.85rem 1rem}
 .rc a{color:#8BC34A;font-size:13px;font-weight:600;text-decoration:none;display:block;margin-bottom:.3rem}
 .rc span{color:rgba(240,237,232,.55);font-size:11px;line-height:1.7}
+.tp{display:flex;gap:5px;align-items:center;padding:.7rem .9rem;background:#161614;border:1px solid rgba(255,255,255,.07);border-radius:3px 10px 10px 10px;width:fit-content}
+.tp i{width:6px;height:6px;border-radius:50%;background:#8BC34A;animation:tb 1.2s infinite;font-style:normal}
+.tp i:nth-child(2){animation-delay:.2s}
+.tp i:nth-child(3){animation-delay:.4s}
+@keyframes tb{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 </style>
 </head>
 <body>
@@ -44,6 +63,11 @@ body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;display:flex;
   <span>模构智脑</span>
   <div class="on">● 在线服务中</div>
 </nav>
+<!-- 促销横幅:改文字就改下面这一行,不想要就整个删掉这个div -->
+<div class="pb" id="PB">
+  <span>🎁 本月新用户福利：注册即送 <b>3条免费AI视频</b> 生成额度，先到先得</span>
+  <button onclick="document.getElementById('PB').style.display='none'">✕</button>
+</div>
 <div class="msgs" id="M"></div>
 <div id="Q"></div>
 <div class="ia">
@@ -51,7 +75,6 @@ body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;display:flex;
   <button class="sb" id="S">&#8594;</button>
 </div><script>
 var H=[];
-var SYS='你是模构AI平台的专属顾问小助手，名字叫小模。说话自然有温度，像朋友一样，不像机器人。熟悉模构AI所有功能和操作步骤。\n\n注册方式：微信搜索小程序"模构AI"，或网页 mogouzhineng.com/ai/\n\n核心功能：\n视频分镜工坊：上传产品图→三视图→卖点分析→25宫格分镜→拍摄脚本→视频合成，7分钟生成15秒广告视频，一条约20元，一天可出80条\n传统方式对比：传统拍摄一人一月1-1.5万，品质不可控，一天最多3-4条\n电商专属9功能：场景替换/商品换色/AI抠图/无损放大/图片翻译等\n批量视频：一键下载爆款→拆解结构→混剪，1小时出20条\n\n定价：商家版2980元每年/企业版29800元每年/定制版198000元\n\n销售原则：先了解用户痛点，循序渐进，让用户自己算账，第3-4轮后给注册链接，在回复末尾加[LINK]。只说中文，不超过120字，不用markdown格式。';
 
 function am(r,t){
   var m=document.getElementById('M');
@@ -85,6 +108,26 @@ function addCase(){
   setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
 }
 
+// ===== 话题格子:想改内容就改下面 items 里的文字和问题 =====
+function addTopics(){
+  var m=document.getElementById('M');
+  var g=document.createElement('div');g.className='tg';
+  var items=[
+    {c:'tg1',e:'🎬',t:'视频分镜工坊',s:'7分钟出一条广告视频',q:'视频分镜工坊是怎么用的？'},
+    {c:'tg2',e:'🛒',t:'电商详情页',s:'AI一键生成，配图+文案全包',q:'电商详情页功能是怎么用的？'},
+    {c:'tg3',e:'🧑‍💼',t:'数字人视频',s:'无需真人出镜，文字一键出片',q:'数字人视频是怎么做的？'},
+    {c:'tg4',e:'💰',t:'价格方案',s:'看看哪个版本适合我',q:'模构AI的价格方案是怎样的？'}
+  ];
+  items.forEach(function(it){
+    var d=document.createElement('div');d.className='tgi '+it.c;
+    d.innerHTML='<div class="tge">'+it.e+'</div><div class="tgt">'+it.t+'</div><div class="tgs">'+it.s+'</div>';
+    d.onclick=function(){st(it.q);};
+    g.appendChild(d);
+  });
+  m.appendChild(g);
+  setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
+}
+
 function sq(opts){
   var q=document.getElementById('Q');q.innerHTML='';
   if(!opts||!opts.length)return;
@@ -97,32 +140,59 @@ function sq(opts){
   q.appendChild(w);
 }
 
+function showTp(){
+  hideTp();
+  var m=document.getElementById('M');
+  var d=document.createElement('div');d.className='msg ai';d.id='TP';
+  var a=document.createElement('div');a.className='av';a.textContent='模';
+  var b=document.createElement('div');b.className='tp';
+  b.innerHTML='<i></i><i></i><i></i>';
+  d.appendChild(a);d.appendChild(b);
+  m.appendChild(d);
+  setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
+}
+function hideTp(){
+  var t=document.getElementById('TP');
+  if(t)t.parentNode.removeChild(t);
+}
+
 function st(text){
   document.getElementById('Q').innerHTML='';
   am('u',text);
   document.getElementById('I').value='';
   document.getElementById('S').disabled=true;
   H.push({role:'user',content:text});
+  if(H.length>20)H=H.slice(-20);
+  showTp();
+  sendReq(0);
+}
+
+function sendReq(attempt){
   fetch('/api/chat',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({system:SYS,messages:H})
+    body:JSON.stringify({messages:H})
   })
   .then(function(r){return r.json();})
   .then(function(d){
-    document.getElementById('S').disabled=false;
     var t=(d.content||[]).map(function(b){return b.text||'';}).join('');
-    if(!t){am('ai','抱歉，请重试。');return;}
+    if(!t)throw new Error('empty');
+    hideTp();
+    document.getElementById('S').disabled=false;
     H.push({role:'assistant',content:t});
     am('ai',t);
     var round=Math.floor(H.length/2);
     if(round===1)sq(['内容成本太高','产量不够','想了解怎么用']);
-    else if(round===2)sq(['想马上体验','想了解价格','想联系顾问']);
-    else if(round>=3)sq(['想马上体验','想了解价格','想联系顾问']);
+    else if(round>=2)sq(['想马上体验','想了解价格','想联系顾问']);
   })
   .catch(function(){
+    if(attempt<1){
+      setTimeout(function(){sendReq(attempt+1);},1500);
+      return;
+    }
+    hideTp();
     document.getElementById('S').disabled=false;
-    am('ai','网络有点问题，稍等再试试？');
+    am('ai','人有点多，小模忙不过来了，请稍等几秒再发一次哦～');
   });
 }
 
@@ -133,9 +203,10 @@ document.getElementById('I').addEventListener('keydown',function(e){
   if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();var v=this.value.trim();if(v)st(v);}
 });
 
-am('ai','您好呀！我是模构AI的小助手小模 👋\n\n先给您看一个真实案例：\n\n一家佛山家具工厂，昨天在模构AI做了这几件事 👇');
+am('ai','直播间来的朋友，您好呀！我是模构AI的小助手小模 👋\n\n先给您看一个真实案例：\n\n一家佛山家具工厂，昨天在模构AI做了这几件事 👇');
 addCase();
-am('ai','您现在做的是哪个行业？我帮您看看模构AI能为您节省多少成本。');
+am('ai','您最想了解哪个功能？点下面的卡片，或者直接告诉我您是做什么行业的 👇');
+addTopics();
 sq(['我做家具建材','我是室内设计师','我做短视频','我是电商卖家','我是品牌方']);
 </script>
 </body>
