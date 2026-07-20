@@ -111,19 +111,21 @@ function addCase(){
   setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
 }
 
-var KW=[
-  ['室内','CAD','彩平'],
-  ['效果图','文生'],
-  ['短剧','剧本'],
-  ['数字人','口播'],
-  ['广告','TVC','泰国','欧美'],
-  ['详情页','电商']
+// ===== 功能识别:越靠前的优先级越高 =====
+var KWP=[
+  [2,['文生','效果图']],
+  [1,['室内','CAD','彩平']],
+  [3,['短剧','剧本']],
+  [4,['数字人','口播']],
+  [5,['广告','TVC','泰国','欧美']],
+  [6,['详情页','电商']]
 ];
 var FEAT=0;
 function detectFeat(t){
-  for(var i=0;i<KW.length;i++){
-    for(var j=0;j<KW[i].length;j++){
-      if(t.indexOf(KW[i][j])>=0)return i+1;
+  for(var i=0;i<KWP.length;i++){
+    var ws=KWP[i][1];
+    for(var j=0;j<ws.length;j++){
+      if(t.indexOf(ws[j])>=0)return KWP[i][0];
     }
   }
   return 0;
@@ -171,7 +173,7 @@ function addTopics(){
   var g=document.createElement('div');g.className='tg';
   var items=[
     {c:'tg1',e:'🏠',t:'室内设计全流程',s:'CAD→彩平图→换家具换颜色',q:'室内设计全流程功能是怎么用的？'},
-    {c:'tg2',e:'✨',t:'文生效果图',s:'一段文字→效果图→视频',q:'文字生成室内效果图是怎么用的？'},
+    {c:'tg2',e:'✨',t:'文生效果图',s:'一段文字→效果图→视频',q:'文生效果图是怎么用的？'},
     {c:'tg3',e:'🎭',t:'短剧制作',s:'剧本→定装→场景→成片',q:'短剧制作的流程是怎样的？'},
     {c:'tg4',e:'🧑‍💼',t:'数字人口播',s:'传照片+文案，一键出片',q:'数字人口播视频是怎么做的？'},
     {c:'tg5',e:'🎬',t:'广告视频工坊',s:'TVC·泰国·欧美一键生成',q:'广告视频工坊是怎么用的？'},
