@@ -67,7 +67,6 @@ body{background:#0D0D0B;color:#F0EDE8;font-family:Arial,sans-serif;display:flex;
   <span>模构智脑</span>
   <div class="on">● 在线服务中</div>
 </nav>
-<!-- 促销横幅:改文字就改下面这一行,不想要就整个删掉这个div -->
 <div class="pb" id="PB">
   <span>🎁 本月新用户福利：注册即送 <b>3条免费AI视频</b> 生成额度，先到先得</span>
   <button onclick="document.getElementById('PB').style.display='none'">✕</button>
@@ -112,8 +111,6 @@ function addCase(){
   setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
 }
 
-// ===== 按功能展示案例:用户问哪个功能,就展示哪个功能的成品 =====
-// 1室内设计 2文生效果图 3短剧 4数字人 5广告工坊 6电商详情页
 var KW=[
   ['室内','CAD','彩平'],
   ['效果图','文生'],
@@ -131,7 +128,147 @@ function detectFeat(t){
   }
   return 0;
 }
-// 每个功能的案例:d=这个结果是怎么生成的(说明文字),f=图片视频文件名(按展示顺序)
 var MEDIA={
   1:{d:'',f:[]},
-  2:{d:'只输入了一段文字描述，没写一个提示词：AI 先生成建筑效果图 → 再生成多空间多场景带人物的九宫格 → 最后一键驱动成视频，直接用于商业汇报。',f:
+  2:{d:'只输入了一段文字描述，没写一个提示词：AI 先生成建筑效果图 → 再生成多空间多场景带人物的九宫格 → 最后一键驱动成视频，直接用于商业汇报。',f:['95e5ce5426fcce1c8d4c70defb2e7e20.mp4','fd2d135277de478e681a9d6779c4ed32.mp4']},
+  3:{d:'',f:[]},
+  4:{d:'',f:[]},
+  5:{d:'',f:[]},
+  6:{d:'',f:[]}
+};
+function addCases(n){
+  var it=MEDIA[n];
+  if(!it||!it.f.length)return;
+  var m=document.getElementById('M');
+  var c=document.createElement('div');c.className='case';
+  var h='<h4>📌 真实生成案例 · 全程点选零提示词</h4>';
+  if(it.d)h+='<div class="note">'+it.d+'</div>';
+  c.innerHTML=h;
+  var w=document.createElement('div');w.className='gal';
+  w.style.margin='.6rem 0 0 0';w.style.maxWidth='100%';
+  it.f.forEach(function(f){
+    var el;
+    if(/\.mp4$/i.test(f)){
+      el=document.createElement('video');
+      el.src='/'+f;
+      el.controls=true;el.preload='metadata';
+      el.setAttribute('playsinline','');
+      el.style.height='150px';el.style.borderRadius='10px';el.style.flexShrink='0';
+    }else{
+      el=document.createElement('img');
+      el.src='/'+f;
+    }
+    el.onerror=function(){if(this.parentNode)this.parentNode.removeChild(this);};
+    w.appendChild(el);
+  });
+  c.appendChild(w);
+  m.appendChild(c);
+  setTimeout(function(){m.scrollTop=m.scrollHeight;},100);
+}
+
+function addTopics(){
+  var m=document.getElementById('M');
+  var g=document.createElement('div');g.className='tg';
+  var items=[
+    {c:'tg1',e:'🏠',t:'室内设计全流程',s:'CAD→彩平图→换家具换颜色',q:'室内设计全流程功能是怎么用的？'},
+    {c:'tg2',e:'✨',t:'文生效果图',s:'一段文字→效果图→视频',q:'文字生成室内效果图是怎么用的？'},
+    {c:'tg3',e:'🎭',t:'短剧制作',s:'剧本→定装→场景→成片',q:'短剧制作的流程是怎样的？'},
+    {c:'tg4',e:'🧑‍💼',t:'数字人口播',s:'传照片+文案，一键出片',q:'数字人口播视频是怎么做的？'},
+    {c:'tg5',e:'🎬',t:'广告视频工坊',s:'TVC·泰国·欧美一键生成',q:'广告视频工坊是怎么用的？'},
+    {c:'tg6',e:'🛒',t:'电商详情页',s:'产品图→5-15张详情页',q:'电商详情页功能是怎么用的？'}
+  ];
+  items.forEach(function(it){
+    var d=document.createElement('div');d.className='tgi '+it.c;
+    d.innerHTML='<div class="tge">'+it.e+'</div><div class="tgt">'+it.t+'</div><div class="tgs">'+it.s+'</div>';
+    d.onclick=function(){st(it.q);};
+    g.appendChild(d);
+  });
+  m.appendChild(g);
+  setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
+}
+
+function sq(opts){
+  var q=document.getElementById('Q');q.innerHTML='';
+  if(!opts||!opts.length)return;
+  var w=document.createElement('div');w.className='qw';
+  opts.forEach(function(o){
+    var b=document.createElement('button');b.className='qr';b.textContent=o;
+    b.onclick=function(){q.innerHTML='';st(o);};
+    w.appendChild(b);
+  });
+  q.appendChild(w);
+}
+
+function showTp(){
+  hideTp();
+  var m=document.getElementById('M');
+  var d=document.createElement('div');d.className='msg ai';d.id='TP';
+  var a=document.createElement('div');a.className='av';a.textContent='模';
+  var b=document.createElement('div');b.className='tp';
+  b.innerHTML='<i></i><i></i><i></i>';
+  d.appendChild(a);d.appendChild(b);
+  m.appendChild(d);
+  setTimeout(function(){m.scrollTop=m.scrollHeight;},50);
+}
+function hideTp(){
+  var t=document.getElementById('TP');
+  if(t)t.parentNode.removeChild(t);
+}
+
+function st(text){
+  FEAT=detectFeat(text);
+  document.getElementById('Q').innerHTML='';
+  am('u',text);
+  document.getElementById('I').value='';
+  document.getElementById('S').disabled=true;
+  H.push({role:'user',content:text});
+  if(H.length>20)H=H.slice(-20);
+  showTp();
+  sendReq(0);
+}
+
+function sendReq(attempt){
+  fetch('/api/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages:H})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    var t=(d.content||[]).map(function(b){return b.text||'';}).join('');
+    if(!t)throw new Error('empty');
+    hideTp();
+    document.getElementById('S').disabled=false;
+    H.push({role:'assistant',content:t});
+    am('ai',t);
+    if(FEAT>0){addCases(FEAT);FEAT=0;}
+    var round=Math.floor(H.length/2);
+    if(round===1)sq(['内容成本太高','产量不够','想了解怎么用']);
+    else if(round>=2)sq(['想马上体验','想了解价格','想联系顾问']);
+  })
+  .catch(function(){
+    if(attempt<1){
+      setTimeout(function(){sendReq(attempt+1);},1500);
+      return;
+    }
+    hideTp();
+    document.getElementById('S').disabled=false;
+    am('ai','人有点多，小模忙不过来了，请稍等几秒再发一次哦～');
+  });
+}
+
+document.getElementById('S').onclick=function(){
+  var v=document.getElementById('I').value.trim();if(v)st(v);
+};
+document.getElementById('I').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();var v=this.value.trim();if(v)st(v);}
+});
+
+am('ai','直播间来的朋友，您好呀！我是模构AI的小助手小模 👋\n\n先给您看一个真实案例：\n\n一家佛山家具工厂，昨天在模构AI做了这几件事 👇');
+addCase();
+am('ai','您最想了解哪个功能？点下面的卡片，或者直接告诉我您是做什么行业的 👇');
+addTopics();
+sq(['我做家具建材','我是室内设计师','我做短视频','我是电商卖家','我是品牌方']);
+</script>
+</body>
+</html>
